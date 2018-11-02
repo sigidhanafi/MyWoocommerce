@@ -3,13 +3,18 @@ import { Router, Stack, Scene } from 'react-native-router-flux'
 import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import logger from 'redux-logger'
+import { createEpicMiddleware, combineEpics } from 'redux-observable'
 
 import appStore from './reducers'
+import { combinedStoreEpic } from './actions/StoreAction'
 
 import StoreListScreen from './containers/StoreListScreen'
 import StoreDetailScreen from './containers/StoreDetailScreen'
 
-const store = createStore(appStore, applyMiddleware(logger))
+const observableMiddleware = createEpicMiddleware()
+const middleware = [observableMiddleware, logger]
+const store = createStore(appStore, applyMiddleware(...middleware))
+observableMiddleware.run(combinedStoreEpic)
 
 export default (AppRouter = () => (
   <Provider store={store}>
