@@ -1,3 +1,5 @@
+import { STORE_REQUEST_SUCCESS } from '../actions/StoreAction'
+
 const initialStore = {
   data: [],
   isLoading: false
@@ -5,9 +7,8 @@ const initialStore = {
 
 export const stores = (state = initialStore, action) => {
   switch (action.type) {
-    case action.type === 'HALLO':
-      return { ...state }
-      break
+    case STORE_REQUEST_SUCCESS:
+      return { ...state, data: action.data }
     default:
       return state
   }
