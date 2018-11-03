@@ -14,7 +14,7 @@ import ProductCell from '../components/ProductCell'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: 'white'
   },
   bodyContainer: {
     margin: 10

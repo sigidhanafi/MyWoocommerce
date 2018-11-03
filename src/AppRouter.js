@@ -9,6 +9,7 @@ import appStore from './reducers'
 import { combinedStoreEpic } from './actions/StoreAction'
 import { combinedStoreDetailEpic } from './actions/StoreDetailAction'
 import { combinedStoreProductEpic } from './actions/StoreProductAction'
+import { combinedSelectedProductEpic } from './actions/SelectedProductAction'
 
 import StoreListScreen from './containers/StoreListScreen'
 import StoreDetailScreen from './containers/StoreDetailScreen'
@@ -20,7 +21,8 @@ observableMiddleware.run(
   combineEpics(
     combinedStoreEpic,
     combinedStoreDetailEpic,
-    combinedStoreProductEpic
+    combinedStoreProductEpic,
+    combinedSelectedProductEpic
   )
 )
 
