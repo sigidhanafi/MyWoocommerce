@@ -23,7 +23,7 @@ export default (AppRouter = () => (
         <Scene
           key="storeListScreen"
           component={StoreListScreen}
-          title="Stores"
+          title="WooCommerce Stores"
         />
         <Scene
           key="storeDetailScreen"

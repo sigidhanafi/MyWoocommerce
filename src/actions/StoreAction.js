@@ -1,5 +1,5 @@
 import { combineEpics, ofType } from 'redux-observable'
-import { mergeMap, map, catchError } from 'rxjs/operators'
+import { mergeMap, map, catchError, filter } from 'rxjs/operators'
 import { from, of } from 'rxjs'
 
 export const STORE_REQUEST = 'STORE_REQUEST'
@@ -50,7 +50,8 @@ export const fetchDataEpic = action$ =>
       return from(storeRequest()).pipe(
         map(data => {
           const { stores } = data
-          return { type: STORE_REQUEST_SUCCESS, data: stores }
+          const dataStore = stores.filter(store => store.tradingName)
+          return { type: STORE_REQUEST_SUCCESS, data: dataStore }
         })
       )
     }),
