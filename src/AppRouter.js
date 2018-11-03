@@ -14,7 +14,7 @@ import { combinedSelectedProductEpic } from './actions/SelectedProductAction'
 
 import StoreListScreen from './containers/StoreListScreen'
 import StoreDetailScreen from './containers/StoreDetailScreen'
-import SelectedProductScreen from './containers/SelectedProductScreen';
+import SelectedProductScreen from './containers/SelectedProductScreen'
 
 const observableMiddleware = createEpicMiddleware()
 const middleware = [observableMiddleware, logger]
@@ -28,9 +28,22 @@ observableMiddleware.run(
   )
 )
 
+handleBackAndroid = () => {
+  if (Actions.state.index === 0) {
+    Actions.pop()
+    return true
+  }
+
+  return false
+}
+
 export default (AppRouter = () => (
   <Provider store={store}>
-    <Router>
+    <Router
+      backAndroidHandler={() => {
+        handleBackAndroid()
+      }}
+    >
       <Stack
         key="root"
         rightTitle="Selected"

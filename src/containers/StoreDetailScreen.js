@@ -1,5 +1,11 @@
 import React from 'react'
-import { View, Text, StyleSheet, ActivityIndicator } from 'react-native'
+import {
+  View,
+  Text,
+  StyleSheet,
+  ActivityIndicator,
+  BackHandler
+} from 'react-native'
 import { connect } from 'react-redux'
 import { fetchDataStoreDetail } from '../actions/StoreDetailAction'
 

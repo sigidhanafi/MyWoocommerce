@@ -5,7 +5,8 @@ import {
   TouchableOpacity,
   StyleSheet,
   FlatList,
-  ActivityIndicator
+  ActivityIndicator,
+  BackHandler
 } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 import { connect } from 'react-redux'
