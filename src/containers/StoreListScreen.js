@@ -83,14 +83,6 @@ class StoreListScreen extends React.Component {
           keyExtractor={item => item.storeId}
           renderItem={({ item }) => this.renderStore(item)}
         />
-        {/* <Text>StoreListScreen</Text>
-        <TouchableOpacity
-          onPress={() => {
-            // Actions.storeDetailScreen()
-          }}
-        >
-          <Text>Klik Me</Text>
-        </TouchableOpacity> */}
       </View>
     )
   }

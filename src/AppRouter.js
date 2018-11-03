@@ -8,6 +8,7 @@ import { createEpicMiddleware, combineEpics } from 'redux-observable'
 import appStore from './reducers'
 import { combinedStoreEpic } from './actions/StoreAction'
 import { combinedStoreDetailEpic } from './actions/StoreDetailAction'
+import { combinedStoreProductEpic } from './actions/StoreProductAction'
 
 import StoreListScreen from './containers/StoreListScreen'
 import StoreDetailScreen from './containers/StoreDetailScreen'
@@ -16,7 +17,11 @@ const observableMiddleware = createEpicMiddleware()
 const middleware = [observableMiddleware, logger]
 const store = createStore(appStore, applyMiddleware(...middleware))
 observableMiddleware.run(
-  combineEpics(combinedStoreEpic, combinedStoreDetailEpic)
+  combineEpics(
+    combinedStoreEpic,
+    combinedStoreDetailEpic,
+    combinedStoreProductEpic
+  )
 )
 
 export default (AppRouter = () => (

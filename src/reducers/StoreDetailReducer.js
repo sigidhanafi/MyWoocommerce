@@ -5,7 +5,7 @@ import {
 } from '../actions/StoreDetailAction'
 
 const initialStore = {
-  data: [],
+  data: null,
   isLoading: false,
   error: null
 }

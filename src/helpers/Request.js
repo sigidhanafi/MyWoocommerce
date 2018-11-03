@@ -11,3 +11,9 @@ export const storeDetailRequest = storeId => {
     .get(`${baseUrl}/get-store?storeId=${storeId}`)
     .then(response => response.data)
 }
+
+export const storeProductRequest = storeId => {
+  return axios
+    .get(`${baseUrl}/get-store-products?storeId=${storeId}`)
+    .then(response => response.data)
+}

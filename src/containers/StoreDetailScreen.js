@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
 import { fetchDataStoreDetail } from '../actions/StoreDetailAction'
 
+import ProductListScreen from './ProductListScreen'
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -12,15 +14,20 @@ const styles = StyleSheet.create({
     margin: 10
   },
   storeHeaderContainer: {
-    margin: 16,
+    margin: 16
   },
   title: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 8,
+    marginBottom: 8
   },
   subTitle: {
-    fontSize: 14,
+    fontSize: 14
+  },
+  separator: {
+    backgroundColor: 'rgb(224, 224, 224)',
+    height: 1,
+    marginVertical: 8
   }
 })
 
@@ -32,10 +39,11 @@ class StoreDetailScreen extends React.Component {
 
   render() {
     const {
-      storeDetail: { isLoading, error, data }
+      storeDetail: { isLoading, error, data },
+      item: { storeId }
     } = this.props
 
-    if (isLoading) {
+    if (isLoading || data === null) {
       return (
         <View style={styles.container}>
           <View style={styles.bodyContainer}>
@@ -64,6 +72,8 @@ class StoreDetailScreen extends React.Component {
           <Text style={styles.subTitle}>{suburb}</Text>
           <Text style={styles.subTitle}>{businessEmail}</Text>
         </View>
+        <View style={styles.separator} />
+        <ProductListScreen storeId={storeId} />
       </View>
     )
   }
