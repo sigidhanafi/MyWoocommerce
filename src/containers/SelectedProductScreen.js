@@ -9,7 +9,7 @@ import {
 import { connect } from 'react-redux'
 import { fetchDataStoreProduct } from '../actions/StoreProductAction'
 
-import ProductCell from '../components/ProductCell'
+import ProductCell from '../containers/ProductCell'
 
 const styles = StyleSheet.create({
   container: {
