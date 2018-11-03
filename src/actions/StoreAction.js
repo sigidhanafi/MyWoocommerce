@@ -1,5 +1,6 @@
 import { combineEpics, ofType } from 'redux-observable'
-import { mergeMap } from 'rxjs/operators'
+import { mergeMap, map, mapTo } from 'rxjs/operators'
+import { from } from 'rxjs'
 import axios from 'axios'
 
 export const STORE_REQUEST = 'STORE_REQUEST'
@@ -15,17 +16,17 @@ export const fetchData = () => {
 export const fetchDataEpic = action$ =>
   action$.pipe(
     ofType(STORE_REQUEST),
-    mergeMap(async () => {
-      return await axios
-        .get('http://ubux.biz/test/get-all-stores')
-        .then(response => {
-          const {
-            data: { stores }
-          } = response
-          console.log('haha', stores)
-          return { type: STORE_REQUEST_SUCCESS, data: stores }
+    mergeMap(() => {
+      return from(
+        axios
+          .get('http://ubux.biz/test/get-all-stores')
+          .then(response => response.data)
+      ).pipe(
+        map(response => {
+          console.log('Response', response)
+          return { type: STORE_REQUEST_SUCCESS, data: [] }
         })
-      // await new Promise(resolve => setTimeout(resolve, 3000))
+      )
     })
   )
 
