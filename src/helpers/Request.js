@@ -17,3 +17,13 @@ export const storeProductRequest = storeId => {
     .get(`${baseUrl}/get-store-products?storeId=${storeId}`)
     .then(response => response.data)
 }
+
+export const searchStoreRequest = keyword => {
+  return axios({
+    method: 'post',
+    url: `${baseUrl}/search-store`,
+    data: {
+      keyword
+    }
+  }).then(response => response.data)
+}

@@ -69,12 +69,20 @@ class ProductCell extends React.PureComponent {
     )
     return (
       <View style={styles.container}>
-        <Image
-          source={{ uri: product.imageUrl }}
-          defaultSource={defaultProduct}
-          style={styles.productImage}
-          resizeMode={'cover'}
-        />
+        {product.imageUrl ? (
+          <Image
+            source={{ uri: product.imageUrl }}
+            defaultSource={defaultProduct}
+            style={styles.productImage}
+            resizeMode={'cover'}
+          />
+        ) : (
+          <Image
+            source={defaultProduct}
+            style={styles.productImage}
+            resizeMode={'cover'}
+          />
+        )}
         <View style={{ marginHorizontal: 0 }}>
           <Text style={styles.productName}>{product.name}</Text>
           <Text style={styles.productlabel}>$ {product.priceBux}</Text>

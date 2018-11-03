@@ -1,12 +1,13 @@
 import { combineEpics, ofType } from 'redux-observable'
-import { mergeMap, map, catchError, filter } from 'rxjs/operators'
+import { mergeMap, map, catchError, filter, tap } from 'rxjs/operators'
 import { from, of } from 'rxjs'
 
 export const STORE_REQUEST = 'STORE_REQUEST'
 export const STORE_REQUEST_SUCCESS = 'STORE_REQUEST_SUCCESS'
 export const STORE_REQUEST_FAILED = 'STORE_REQUEST_FAILED'
+export const STORE_SEARCH_REQUEST = 'STORE_SEARCH_REQUEST'
 
-import { storeRequest } from '../helpers/Request'
+import { storeRequest, searchStoreRequest } from '../helpers/Request'
 
 export const fetchData = () => {
   return {
@@ -14,34 +15,12 @@ export const fetchData = () => {
   }
 }
 
-// export const fetchDataEpic = action$ =>
-//   action$.pipe(
-//     ofType(STORE_REQUEST),
-//     mergeMap(() => {
-//       return from(
-//         axios
-//           .get('http://ubux.biz/test/get-all-stores')
-//           .then(response => response.data)
-//       ).pipe(
-//         mergeMap(() => {
-//           return from(
-//             axios
-//               .get('http://ubux.biz/test/get-all-stores')
-//               .then(response => response.data)
-//           ).pipe(
-//             map(response => {
-//               console.log('Response', response)
-//               return { type: STORE_REQUEST_SUCCESS, data: [] }
-//             })
-//           )}
-//         )
-//       )
-//     }),
-//     catchError(err => {
-//       console.log('Err', err)
-//       return of({ type: STORE_REQUEST_FAILED })
-//     }),
-//   )
+export const searchStoreData = keyword => {
+  return {
+    type: STORE_SEARCH_REQUEST,
+    keyword
+  }
+}
 
 export const fetchDataEpic = action$ =>
   action$.pipe(
@@ -60,4 +39,31 @@ export const fetchDataEpic = action$ =>
     })
   )
 
-export const combinedStoreEpic = combineEpics(fetchDataEpic)
+export const searchStoreDataEpic = (action$, state$) =>
+  action$.pipe(
+    ofType(STORE_SEARCH_REQUEST),
+    mergeMap(action => {
+      if (action.keyword.length >= 3) {
+        return from(searchStoreRequest(action.keyword)).pipe(
+          map(data => {
+            const { stores } = data
+            const dataStore = stores
+              .filter(store => store.tradingName)
+              .map(data => {
+                return { ...data, storeId: data._id }
+              })
+            return { type: STORE_REQUEST_SUCCESS, data: dataStore }
+          })
+        )
+      }
+      return of({ type: STORE_REQUEST })
+    }),
+    catchError(error => {
+      return of({ type: STORE_REQUEST_FAILED, error: error.message })
+    })
+  )
+
+export const combinedStoreEpic = combineEpics(
+  fetchDataEpic,
+  searchStoreDataEpic
+)

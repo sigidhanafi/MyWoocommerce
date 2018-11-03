@@ -1,7 +1,8 @@
 import {
   STORE_REQUEST,
   STORE_REQUEST_SUCCESS,
-  STORE_REQUEST_FAILED
+  STORE_REQUEST_FAILED,
+  STORE_SEARCH_REQUEST
 } from '../actions/StoreAction'
 
 const initialStore = {
@@ -13,6 +14,8 @@ const initialStore = {
 export const stores = (state = initialStore, action) => {
   switch (action.type) {
     case STORE_REQUEST:
+      return { ...state, isLoading: true }
+    case STORE_SEARCH_REQUEST:
       return { ...state, isLoading: true }
     case STORE_REQUEST_SUCCESS:
       return { ...state, data: action.data, isLoading: false }

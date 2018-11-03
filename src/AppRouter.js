@@ -12,9 +12,9 @@ import { combinedStoreDetailEpic } from './actions/StoreDetailAction'
 import { combinedStoreProductEpic } from './actions/StoreProductAction'
 import { combinedSelectedProductEpic } from './actions/SelectedProductAction'
 
-import StoreListScreen from './containers/StoreListScreen'
 import StoreDetailScreen from './containers/StoreDetailScreen'
 import SelectedProductScreen from './containers/SelectedProductScreen'
+import HomeScreen from './containers/HomeScreen'
 
 const observableMiddleware = createEpicMiddleware()
 const middleware = [observableMiddleware, logger]
@@ -50,9 +50,9 @@ export default (AppRouter = () => (
         onRight={() => Actions.selectedProductScreen()}
       >
         <Scene
-          key="storeListScreen"
-          component={StoreListScreen}
-          title="WooCommerce Stores"
+          key="homeScreen"
+          component={HomeScreen}
+          title="Stores"
         />
         <Scene
           key="storeDetailScreen"
@@ -62,7 +62,9 @@ export default (AppRouter = () => (
         <Scene
           key="selectedProductScreen"
           component={SelectedProductScreen}
-          title="Selected Product"
+          title="Selected"
+          rightTitle=""
+          onRight={() => {}}
         />
       </Stack>
     </Router>
